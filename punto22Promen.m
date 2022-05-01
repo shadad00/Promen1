@@ -1,4 +1,4 @@
-function []=punto22Promen(t,Yaux,H,C)
+function [Evalues Svalues]=punto22Promen(t,Yaux,H,C)
  %% h(t) hallada en punto 1 
  %% t tiempos de evaluacion
  Evalues=[];
