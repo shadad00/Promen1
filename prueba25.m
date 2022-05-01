@@ -1,0 +1,10 @@
+T=30000
+H=30
+C=30
+h0=20
+finalLlenado=18000
+paso=100
+Ma=0.75
+Mb=1.5
+Mp=0.25
+[Multiplicador R D] = punto25Promen(T,H,C,h0,finalLlenado,paso, Ma, Mb, Mp)

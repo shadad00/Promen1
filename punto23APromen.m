@@ -1,4 +1,4 @@
-function [Evalues, Svalues]=punto22Promen(t,Yaux,H,C, Multiplicador)
+function [Evalues, Svalues]=punto23APromen(t,Yaux,H,C, Multiplicador)
  %% h(t) hallada en punto 1 
  %% t tiempos de evaluacion
  Evalues=[];
@@ -25,5 +25,4 @@ while(current <= 301)
   endif
   current=current+1;
 endwhile  
-  plot(t,Evalues,t,Svalues);
 end
