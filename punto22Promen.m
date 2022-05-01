@@ -1,5 +1,5 @@
-function [Evalues Svalues]=punto22Promen(t,Yaux,H,C)
- %% h(t) hallada en punto 1 
+function [Evalues, Svalues]=punto22Promen(t,Yaux,H,C)
+ %% h(t) hallada en punto 1
  %% t tiempos de evaluacion
  Evalues=[];
  E=@(t) 3.35*(t/1000)^5*exp(-0.667*t/1000);
@@ -9,7 +9,7 @@ function [Evalues Svalues]=punto22Promen(t,Yaux,H,C)
    if(current>181)
       Evalues=[Evalues;0];
     else
-      Evalues=[Evalues;E(t(current))]
+      Evalues=[Evalues;E(t(current))];
     endif
    current=current+1;
  endwhile

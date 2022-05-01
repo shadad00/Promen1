@@ -1,6 +1,6 @@
-function [Taux Yaux]=punto21Promen(T,H,C,h0,finalLlenado,paso)
-  fun0=@(t,h)(3.35*(t/1000)^5*exp(-0.667*t/1000))/((27.5*h.^3)-(372*h.^2)+2130*h); %%llenado y sin vaciado
-  fun1=@(t,h)(3.35*(t/1000)^5*exp(-0.667*t/1000)-C*((h-H).^(3/2)))/((27.5*h.^3)-(372*h.^2)+2130*h);%%llenado y con vaciado
+function [Taux Yaux]=punto21Promen(T,H,C,h0,finalLlenado,paso, multiplicador)
+  fun0=@(t,h)(multiplicador*3.35*(t/1000)^5*exp(-0.667*t/1000))/((27.5*h.^3)-(372*h.^2)+2130*h); %%llenado y sin vaciado
+  fun1=@(t,h)(multiplicador*3.35*(t/1000)^5*exp(-0.667*t/1000)-C*((h-H).^(3/2)))/((27.5*h.^3)-(372*h.^2)+2130*h);%%llenado y con vaciado
   fun2=@(t,h)(-C*((h-H).^(3/2)))/((27.5*h.^3)-(372*h.^2)+2130*h);%%sin llenado y con vaciado
   
 
