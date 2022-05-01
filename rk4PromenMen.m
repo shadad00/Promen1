@@ -1,4 +1,4 @@
-function [T Y]=rk4PromenMax(f,a,b,ya,N,H)
+function [T Y]=rk4PromenMen(f,a,b,ya,N,H)
 h=(b-a)/N; 
 T=[a];
 Y=[ya];  
