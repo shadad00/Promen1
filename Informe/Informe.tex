@@ -1,18 +1,131 @@
 \documentclass{article}
 \usepackage{amsmath}
 \usepackage{amsfonts}
+\usepackage[spanish]{babel}
+\usepackage{csquotes}
 
 \author{Salvador Castagnino 60590, Santiago Hadad 61505, Nicolas Birsa 61482,\\ Bruno Squillari 61354, Facundo Zimbimbakis 61478, Juan Barmasch 61033}
 \date{} 
-\title{Metodos Numericos \\ Promen 1}
+\title{Metodos Numericos 93.07 Curso 2022 \\ Promen 1}
 
 \begin{document}
 
 \maketitle 
 
+\begin{center}
+
 \section*{Abstract}
+En el siguiente informe aplicaremos los contenidos estudiados en la materia Métodos Numéricos. Serán resueltos y analizados dos problemas usando tanto contenidos teóricos como implementaciones de los métodos estudiados en el lenguaje Octave.
+\end{center}
 
 \section*{Introduction}
+
+\section*{Ejercicio 1}
+
+\subsection*{Introducción}
+En este ejercicio analizamos el problema de valor inicial
+\[
+\begin{cases}
+y' \left( t \right) = \frac{y \left( t \right) -2ty \left( t \right)^2}{1+t} \qquad t \in [0,5] \\
+y \left( 0 \right) = 0.4
+\end{cases}
+\]
+con solucion conocida
+\[
+y \left( t \right) = \frac{1+t}{t^2+2.5}
+\]
+Esto lo hacemos aproximando la solucion al problema con los metodos de \textit{Punto medio}, \textit{Runge-Kutta} de orden 3, \textit{Runge-Kutta} de orden 4 y \textit{Heun} y luego calculando el error global, dado que se conoce la solucion al problema. El ejercicio consiste de tres puntos los cuales son enunciados a continuacion
+
+\begin{displayquote}
+\textbf{1.} Obtenga un valor del paso de integración $h_E$ de manera tal que el error global $E$ en $t_f$ sea menor que $10^{−5}$. En esta situación el error global $E$ se puede calcular porque se conoce la solución del problema de valor inicial. Considere valores de $h$ de la forma $\frac{T}{2^r}$ para $r$ tomando los valores de 3 a 9 y realice una tabla con tres columnas, una con el valor del paso $h$ y las otras dos con el valor de $E$ correspondiente al error global en $t_f$ usando los métodos de \textit{Punto medio} y \textit{Runge-Kutta} de orden 3.
+
+\bigbreak
+
+\textbf{2.} Represente gráficamente el error global en $t = t_f$ para valores de $h$ de la forma propuesta en el primer ítem. Para el error global recuerde que se conoce la solución del problema y entonces se puede calcular el error global. Use los métodos de Heun y Runge-Kutta de orden 4 para aproximar el valor de $y \left( t_f \right)$. Realice el gráfico con escalas  logarítmicas en los dos ejes y superponiendo los errores globales por ambos métodos. Genere un cálculo que ponga en evidencia el orden del error global de cada uno de estos métodos. Por ejemplo puede generar los cocientes incrementales entre puntos contiguos en la tabla donde reseñe el logaritmo del error global en función del logaritmo del paso h de integración. Esos cocientes incrementales tienden a una constante que es el orden del método de paso fijo utilizado.
+
+\bigbreak
+
+\textbf{3.} \textbf{Uso de ode45 en Octave} El procedimiento ode45 de Octave implementa un procedimiento de aproximación de la solución de problemas de valor inicial para ecuaciones diferenciales ordinarias. El uso básico del procedimiento puede consultarse en la ayuda de Octave en la forma help ode45 en la línea de comando o en algún manual en línea. Este procedimiento permite especificar el error global con una opción AbsTol. Proponer 1e-3 como valor de esa cota de error. Represente gráficamente la aproximación obtenida para la solución del problema inicial en $[t_0, t_f ]$. Observe que el vector de valores de la variable independiente en donde se genera aproximación no necesariamente es de espaciado constante. Represente gráficamente el vector de valores de la variable independiente para mostrar como el espaciado entre valores consecutivos no es constante. Mostrar el mínimo y el máximo espaciamiento entre valores consecutivos de la variable independiente.
+\end{displayquote}
+
+\subsection*{Metodos y Calculo}
+La principal variable estudiada en este ejercio es el error global $E$ de aproximar la solucion al problema con los metodos mencionados anteriormente. Esto
+
+\begin{verbatim}
+function [T Y]=puntoMedio(f,a,b,ya,N)
+h=(b-a)/N;
+T=zeros(N+1,1);
+Y=zeros(N+1,1);
+T(1)=a;
+Y(1)=ya;
+for k=1:N
+  T(k+1)=T(k)+h;
+  K1=h*feval(f,T(k),Y(k));
+  K2=h*feval(f,T(k)+(h/2),Y(k)+(K1/2));
+  Y(k+1)=Y(k)+K2;
+end
+end
+\end{verbatim}
+
+\subsection*{Resultados y Conclusiones}
+
+\[
+t_0 = 0\
+t_f = 5\
+T = 5\
+y_0 = 1\
+h = \frac{T}{2^r}
+\]
+
+
+
+\begin{center}
+\begin{tabular}{||c c c||}
+ \hline
+ r & PM & RK3 \\ [0.5ex]
+ \hline\hline
+ 3 & $5.795\ 10^{-3}$ & $9.823\ 10^{-5}$ \\
+ \hline
+ 4 & $1.383\ 10^{-3}$ & $5.261\ 10^{-6}$ \\
+ \hline
+ 5 & $3.423\ 10^{-4}$ & $3.199\ 10^{-7}$ \\
+ \hline
+ 6 & $8.536\ 10^{-5}$ & $1.986\ 10^{-8}$ \\
+ \hline
+ 7 & $2.133\ 10^{-5}$ & $1.239\ 10^{-9}$ \\
+ \hline
+ 8 & $5.331\ 10^{-6}$ & $7.742\ 10^{-11}$ \\
+ \hline
+ 9 & $1.333\ 10^{-6}$ & $4.838\ 10^{-12}$ \\ [1ex]
+ \hline
+\end{tabular}
+\end{center}
+
+Para obtener el orden del error global de los métodos de Heun y de Runge-Kutta realizamos la siguiente tabla, donde, usando los valores de error obtenidos previamente en el ejercicio 1.1, en cada fila se calcula el cociente entre el error global actual y el de la fila previa correspondientes al método evaluado. Así, teniendo en cuenta que $h=\frac{5}{2^{r}}$, la tabla resultante queda:
+
+\begin{center}
+\begin{tabular}{||c c c||}
+ \hline
+ r & Error de Heun & Error de RK4 \\ [0.5ex]
+ \hline\hline
+ 4 & 0.243477 & 0.053561 \\
+ \hline
+ 5 & 0.248566 & 0.060794 \\
+ \hline
+ 6 & 0.249649 & 0.062086 \\
+ \hline
+ 7 & 0.249913 & 0.062397 \\
+ \hline
+ 8 & 0.249978 & 0.062474 \\
+ \hline
+ 9 & 0.249995 & 0.062499 \\ [1ex]
+ \hline
+\end{tabular}
+\end{center}
+
+Así, por lo visto en la tabla anterior, podemos concluir que el cociente realizado entre los errores globales de los métodos de Heun y Runge-Kutta tienden a $0.25$ y $0.0625$ respectivamente, denotando que el método de Heun es de orden
+
+\section*{Ejercicio 2}
 
 
 \end{document}
