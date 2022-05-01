@@ -1,4 +1,4 @@
-function [R, D] = punto23Promen(Evalues, Svalues, paso)
+function [R, D] = punto23BPromen(Evalues, Svalues, paso)
   [Emax, Eindex] = max(Evalues);
   [Smax, Sindex] = max(Svalues);
   
